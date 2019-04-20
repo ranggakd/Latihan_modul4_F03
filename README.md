@@ -11,142 +11,82 @@ Untuk keperluan latihan dan asistensi daring Sistem Operasi 2019
 
 ## NO 1
 
-Buatlah program C yang bisa menghitung faktorial secara parallel lalu menampilkan hasilnya secara berurutan  
-Contoh:  
-	./faktorial 5 3 4  
-	3! = 6  
-	4! = 24  
-	5! = 120
+Buat sebuah file sistem yang kamu buat ke /home/[user]/Downloads, lalu ubah nama file yang ada pada folder tersebut
+menjadi [nama file].[ekstensi].bak . File .bak tersebut hanya dapat dibaca.
 
 **Jawaban**
 
-1. Buat program dibawah ini dengan nama file soal1.c di folder yang ditentukan.
+1. Buat program dibawah ini dengan nama file lat1.c di folder yang ditentukan.
 
 ```c
-#include <stdio.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <stdlib.h>
-#define llu unsigned long long
 
-pthread_t tid[50];
-llu result[50] = {0};
-
-void* fact_dp(void* arv);
-
-int main(int argc, char* argv[])
-{
-    //invalid cmd argument
-    if (argc <2)
-    {
-        printf("minimal satu argumen\n");
-        exit(1);
-    }
-    //processing factorial by threading
-    int flag[50] = {0};
-    int c=0;
-    int* arg=malloc(sizeof(int*));
-    while(argc>1)
-    {
-        *arg=(atoi(argv[c+1]));
-        pthread_create(&tid[c],NULL,fact_dp,(void*)arg);
-        flag[*arg]=1;
-        argc--;
-        c++;
-        pthread_join(tid[c-1],NULL);
-        //join until any thread eliminate
-    }
-    int l=0;
-    //display the output from array sort asc
-    while(l<50)
-    {
-        if (flag[l] != 0)
-            printf("%d! = %llu\n",l,result[l]);
-        l++;
-    }
-    return 0;
-}
-
-void* fact_dp(void* arv)
-{
-    int *n = (int*)arv;
-    // printf("n=%d\n",*n);
-    if (*n >= 0) 
-    {
-        if (result[*n] != 0)
-            return NULL;
-        else
-        {
-            result[0] = 1;
-            for (int i = 1; i <= *n; ++i) 
-                result[i] = i * result[i - 1];
-            return NULL;
-        }
-    }
-}
 ```
 Penjelasan:
 ```c
-void* fact_dp(void* arv)
-{
-    int *n = (int*)arv;
-    // printf("n=%d\n",*n);
-    if (*n >= 0) 
-    {
-        if (result[*n] != 0)
-            return NULL;
-        else
-        {
-            result[0] = 1;
-            for (int i = 1; i <= *n; ++i) 
-                result[i] = i * result[i - 1];
-            return NULL;
-        }
-    }
-}
+
 ```
 Fungsi untuk mencari bilangan factorial dari argumen tipe data arv yang akan di type cast menjadi pointer integer dengan konsep pemrograman dinamis.
 ```c
-//invalid cmd argument
-if (argc <2)
-{
-    printf("minimal satu argumen\n");
-    exit(1);
-}
+
 ```
 invalid handling argumen command line yang membutuhkan minimal satu argumen
 ```c
-//processing factorial by threading
-int flag[50] = {0};
-int c=0;
-int* arg=malloc(sizeof(int*));
-while(argc>1)
-{
-    *arg=(atoi(argv[c+1]));
-    pthread_create(&tid[c],NULL,fact_dp,(void*)arg);
-    flag[*arg]=1;
-    argc--;
-    c++;
-    pthread_join(tid[c-1],NULL);
-    //join until any thread eliminate
-}
+
 ```
 Array integer flag guna menandai bilangan apa saja yang telah dipassing sebagai argumen ke program. While loop berguna untuk melakukan threading program menghitung nilai factorial suatu argumen kemudian dilanjutkan dengan menunggu threading itu mati.
 ```c
-int l=0;
-//display the output from array sort asc
-while(l<50)
-{
-    if (flag[l] != 0)
-        printf("%d! = %llu\n",l,result[l]);
-    l++;
-}
-return 0;
+
 ```
 While loop untuk menampilkan hasil output sesuai soal berdasarkan tanda array flag.
 
-2. Lalu compile file tadi dengan `-pthread` dan jalankan di terminal
+2. Lalu compile file tadi dengan
+```c
+gcc -Wall `pkg-config fuse --cflags` lat1.c -o l1 `pkg-config fuse --libs`
+```
+dan jalankan di terminal
 
 3. Lakukan simulasi test. Hasil akhir bisa dicek di terminal.
 
 ---
+
+## NO 2
+
+Buat sebuah file system yang mengarah ke /home/[user]/Documents. Pada saat membuka file dengan ekstensi .pdf,
+.doc, .txt pada direktori Documents akan muncul pesan error “Terjadi kesalahan! File berisi konten berbahaya.” dan tidak
+dapat membaca file tersebut. Setelah memunculkan pesan error, file tersebut diganti namanya menjadi <namafile>.
+<ekstensi>.ditandai . Setelah memunculkan pesan error dan mengganti nama file tadi, file tersebut otomatis
+dipindahkan ke direktori rahasia . Jika folder rahasia belum ada, maka secara otomatis akan membuat direktori
+“rahasia” sebelum dipindahkan dan file tidak bisa di read write execute.
+
+**Jawaban**
+
+1. Buat program dibawah ini dengan nama file lat2.c di folder yang ditentukan.
+
+```c
+
+```
+Penjelasan:
+```c
+
+```
+Fungsi untuk mencari bilangan factorial dari argumen tipe data arv yang akan di type cast menjadi pointer integer dengan konsep pemrograman dinamis.
+```c
+
+```
+invalid handling argumen command line yang membutuhkan minimal satu argumen
+```c
+
+```
+Array integer flag guna menandai bilangan apa saja yang telah dipassing sebagai argumen ke program. While loop berguna untuk melakukan threading program menghitung nilai factorial suatu argumen kemudian dilanjutkan dengan menunggu threading itu mati.
+```c
+
+```
+While loop untuk menampilkan hasil output sesuai soal berdasarkan tanda array flag.
+
+2. Lalu compile file tadi dengan
+```c
+gcc -Wall `pkg-config fuse --cflags` lat2.c -o l2 `pkg-config fuse --libs`
+```
+dan jalankan di terminal
+
+3. Lakukan simulasi test. Hasil akhir bisa dicek di terminal.
