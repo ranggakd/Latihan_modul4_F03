@@ -396,7 +396,7 @@ int main(int argc, char *argv[])
 }
 ```
 Penjelasan:
-Masih belum sesuai dengan kehendak soal. Fungsi open selalu terpanggil sebelum aksi open di GUI dilakukan.
+Masih belum sesuai dengan kehendak soal. Fungsi open selalu terpanggil sebelum aksi open di GUI dilakukan. Ada kendala juga di Virtual Machine nya cukup lama untuk dioperasikan
 
 2. Lalu compile file tadi dengan
 ```c
