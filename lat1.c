@@ -78,14 +78,19 @@ struct fuse_file_info *fi)
 static int xmp_rename(const char *src, const char *dst)
 {
     char fpath[1000];
+    char fdest[1000];
     if(strcmp(src,"/") == 0)
     {
         src=dirpath;
         sprintf(fpath,"%s",src);
+	    sprintf(fdest,"%s",dst);
     }
-    else sprintf(fpath, "%s%s",dirpath,src);
-
-    int res = rename(fpath,dst);
+    else
+    {
+        sprintf(fpath, "%s%s",dirpath,src);
+        sprintf(fdest, "%s%s",dirpath,dst);
+    }
+    int res = rename(fpath,fdest);
     if (res == -1)
         return -errno;
     return 0;
